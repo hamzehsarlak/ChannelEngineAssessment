@@ -6,11 +6,7 @@ using MediatR;
 
 namespace ChannelEngine.Core.IMediatR.Abstraction
 {
-    public interface IMediatRCommand<TResult> : ICommand<TResult>, IRequest<TResult>
-    {
-    }
-
-    public interface IMediatRCommand : ICommand, IRequest<Unit>
+    public interface IMediatRQuery<out TResult> : IQuery<TResult>, IRequest<TResult>
     {
     }
 }
