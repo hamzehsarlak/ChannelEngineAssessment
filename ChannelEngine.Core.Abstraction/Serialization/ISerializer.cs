@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ChannelEngine.Core.Abstraction.Serialization
+﻿namespace ChannelEngine.Core.Abstraction.Serialization
 {
     /// <summary>Serialization interface that supports serialize and deserialize methods.</summary>
     public interface ISerializer

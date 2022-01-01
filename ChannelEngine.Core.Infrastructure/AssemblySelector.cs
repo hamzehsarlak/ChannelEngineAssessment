@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ChannelEngine.Core.Infrastructure
+﻿namespace ChannelEngine.Core.Infrastructure
 {
     public enum AssemblySelector
     {

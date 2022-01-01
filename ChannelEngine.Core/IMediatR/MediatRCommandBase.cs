@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ChannelEngine.Core.IMediatR.Abstraction;
 
 namespace ChannelEngine.Core.IMediatR

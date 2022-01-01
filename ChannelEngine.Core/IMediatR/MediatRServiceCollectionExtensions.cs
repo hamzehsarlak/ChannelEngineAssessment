@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ChannelEngine.Core.Abstraction.CQRS;
+﻿using ChannelEngine.Core.Abstraction.CQRS;
 using ChannelEngine.Core.IMediatR.Abstraction;
 using ChannelEngine.Core.Infrastructure;
 using MediatR;
