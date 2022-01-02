@@ -22,9 +22,10 @@ namespace ChannelEngine.Core.RestSharp
 
         public async Task<IRestBusResult<TResponse>> Get<TResponse>(string url, string path, 
             Dictionary<string, string> headers = null,
+            IEnumerable<Tuple<string, string>> queryParameters = null,
             CancellationToken cancellationToken = default) 
         {
-            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, Method.POST, headers));
+            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, Method.POST, headers, queryParameters));
         }
     }
 

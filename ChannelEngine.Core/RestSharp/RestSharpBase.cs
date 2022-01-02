@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,21 +28,24 @@ namespace ChannelEngine.Core.RestSharp
         }
 
         public IRestRequest GetRestRequest<TRequest>(string path, TRequest command, Method httpVerb,
-            Dictionary<string, string> headers)
+            Dictionary<string, string> headers,
+            IEnumerable<Tuple<string, string>> queryParameters)
         {
-            var request = GetBaseRestRequest(path, httpVerb, headers);
+            var request = GetBaseRestRequest(path, httpVerb, headers,queryParameters);
             if (httpVerb == Method.GET) return request;
             request.RequestFormat = DataFormat.Json;
             request.AddJsonBody(command);
             return request;
         }
-        public IRestRequest GetRestRequest(string path, Method httpVerb, Dictionary<string, string> headers)
+        public IRestRequest GetRestRequest(string path, Method httpVerb, Dictionary<string, string> headers, 
+            IEnumerable<Tuple<string, string>> queryParameters)
         {
-            var request = GetBaseRestRequest(path, httpVerb, headers);
+            var request = GetBaseRestRequest(path, httpVerb, headers,queryParameters);
             return request;
         }
 
-        public RestRequest GetBaseRestRequest(string path, Method httpVerb, Dictionary<string, string> headers)
+        public RestRequest GetBaseRestRequest(string path, Method httpVerb, Dictionary<string, string> headers,
+            IEnumerable<Tuple<string, string>> queryParameters)
         {
             var request = new RestRequest(path, DataFormat.Json) { JsonSerializer = _restSerializer, Method = httpVerb };
 
@@ -49,6 +53,9 @@ namespace ChannelEngine.Core.RestSharp
             if (headers != null && headers.Count > 0)
                 foreach (var header in headers)
                     request.AddHeader(header.Key, header.Value);
+            if (queryParameters != null && queryParameters.Any())
+                foreach (var queryParameter in queryParameters)
+                    request.AddQueryParameter(queryParameter.Item1, queryParameter.Item2);
             return request;
         }
 

@@ -8,7 +8,9 @@ namespace ChannelEngine.Core.Abstraction.CQRS
 {
     public interface IRestQueryBus
     {
-        Task<IRestBusResult<TResponse>> Get<TResponse>(string url, string path, Dictionary<string, string> headers,
+        Task<IRestBusResult<TResponse>> Get<TResponse>(string url, string path, 
+            Dictionary<string, string> headers,
+            IEnumerable<Tuple<string, string>> queryParameters,
             CancellationToken cancellationToken = default);
     }
 }

@@ -22,23 +22,26 @@ namespace ChannelEngine.Core.RestSharp
 
         public async Task<IRestBusResult<TResponse>> Post<TRequest, TResponse>(string url, string path, TRequest command,
             Dictionary<string, string> headers = null,
+            IEnumerable<Tuple<string, string>> queryParameters=null,
             CancellationToken cancellationToken = default) where TRequest : ICommand
         {
-            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, command, Method.POST, headers));
+            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, command, Method.POST, headers, queryParameters));
         }
 
         public async Task<IRestBusResult<TResponse>> Put<TRequest, TResponse>(string url, string path, TRequest command,
             Dictionary<string, string> headers = null,
+            IEnumerable<Tuple<string, string>> queryParameters=null,
             CancellationToken cancellationToken = default) where TRequest : ICommand
         {
-            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, command, Method.POST, headers));
+            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, command, Method.POST, headers, queryParameters));
         }
 
         public async Task<IRestBusResult<TResponse>> Delete<TRequest, TResponse>(string url, string path, TRequest command,
             Dictionary<string, string> headers = null,
+            IEnumerable<Tuple<string, string>> queryParameters=null,
             CancellationToken cancellationToken = default) where TRequest : ICommand
         {
-            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, command, Method.POST, headers));
+            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, command, Method.POST, headers, queryParameters));
         }
     }
 }
