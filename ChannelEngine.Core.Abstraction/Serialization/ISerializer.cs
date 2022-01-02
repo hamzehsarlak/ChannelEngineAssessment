@@ -1,4 +1,6 @@
-﻿namespace ChannelEngine.Core.Abstraction.Serialization
+﻿using System.Threading.Tasks;
+
+namespace ChannelEngine.Core.Abstraction.Serialization
 {
     /// <summary>Serialization interface that supports serialize and deserialize methods.</summary>
     public interface ISerializer
@@ -11,6 +13,11 @@
 
         /// <summary>Deserializes the string into an object.</summary>
         T Deserialize<T>(string input);
+
+        Task<string> SerializeAsync(object obj);
+
+        /// <summary>Deserializes the string into an object.</summary>
+        Task<T> DeserializeAsync<T>(string input);
 
     }
 }
