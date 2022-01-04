@@ -11,17 +11,18 @@ namespace ChannelEngine.Core.RestSharp
 {
     public static class RestSharpBusServiceCollectionExtensions
     {
-        public static IServiceCollection AddRestSharpExternalCommandBus(this IServiceCollection services, Action<RestSharpOptions> setupAction)
+        public static IServiceCollection AddRestSharpBus(this IServiceCollection services, Action<RestSharpOptions> setupAction)
         {
             if (setupAction == null)
             {
                 throw new ArgumentNullException(nameof(setupAction));
             }
-            services.TryAddScoped<IRestCommandBus, RestSharpCommandBus>();
-            services.TryAddScoped<IRestSerializer, RestSharpSerializer>();
             var options = new RestSharpOptions();
             setupAction(options);
             services.Configure(setupAction);
+            services.TryAddScoped<IRestCommandBus, RestSharpCommandBus>();
+            services.TryAddScoped<IRestQueryBus, RestSharpQueryBus>();
+            services.TryAddScoped<IRestSerializer, RestSharpSerializer>();
             return services;
         }
     }

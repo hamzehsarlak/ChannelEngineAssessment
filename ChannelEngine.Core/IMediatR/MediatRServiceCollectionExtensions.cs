@@ -34,7 +34,7 @@ namespace ChannelEngine.Core.IMediatR
         /// <param name="withLifetime"></param>
         /// <param name="from"></param>
         /// <returns></returns>
-        private static IServiceCollection AddAllMediatRHandlers(
+        public static IServiceCollection AddAllMediatRHandlers(
             this IServiceCollection services,
             ServiceLifetime withLifetime = ServiceLifetime.Transient,
             AssemblySelector from = AssemblySelector.ApplicationDependencies)

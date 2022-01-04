@@ -37,7 +37,7 @@ namespace ChannelEngine.Application.Order
                 _options.OrderPathGet,
                 null,
                 qps, cancellationToken);
-            if (!request.IsSuccessful || !request.Result.Success) throw request.ErrorException;
+            if (!request.IsSuccessful) throw request.ErrorException;
             return request.Result.Content;
         }
 

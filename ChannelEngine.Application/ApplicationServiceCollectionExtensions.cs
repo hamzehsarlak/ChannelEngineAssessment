@@ -23,5 +23,17 @@ namespace ChannelEngine.Application
             services.Configure(setupAction);
             return services;
         }
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, ChannelEngineRestOptions options)
+        {
+            services.AddApplicationServices(opt =>
+            {
+                opt.ApiKey = options.ApiKey;
+                opt.BaseUrl = options.BaseUrl;
+                opt.OrderPathGet = options.OrderPathGet;
+                opt.SetStockPath = options.SetStockPath;
+                opt.ProductPathGet = options.ProductPathGet;
+            });
+            return services;
+        }
     }
 }

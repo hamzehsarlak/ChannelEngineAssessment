@@ -6,9 +6,13 @@ namespace ChannelEngine.Core.RestSharp
 {
     public class RestSharpOptions
     {
-        public int MaxRetryAttempts { get; } 
-        public TimeSpan PauseBetweenFailures { get; }
+        public int MaxRetryAttempts { get; set; }
+        public TimeSpan PauseBetweenFailures { get; set; }
 
+        public RestSharpOptions()
+        {
+            
+        }
         public RestSharpOptions(int maxRetryAttempts=-1, TimeSpan pauseBetweenFailures= default)
         {
             MaxRetryAttempts = maxRetryAttempts;
