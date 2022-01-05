@@ -25,7 +25,7 @@ namespace ChannelEngine.Tests
         }
 
         [Fact]
-        public void Should_Return_Top_5_Products()
+        public void Should_Return_Top_5_Sold_Products()
         {
             var result= _orderService.GetTopFiveMerchantProducts(GetDummyMerchantOrderResponse());
             Assert.InRange(result.Count(), 0, 5);
