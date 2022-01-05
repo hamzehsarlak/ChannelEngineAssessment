@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using ChannelEngine.Integration.Dtos.Enums;
+using Newtonsoft.Json;
 
 namespace ChannelEngine.Integration.Dtos.Order
 {
@@ -48,6 +49,11 @@ namespace ChannelEngine.Integration.Dtos.Order
         /// <param name="region">Optional. State/province/region..</param>
         /// <param name="countryIso">For example: NL, BE, FR..</param>
         /// <param name="original">Optional. The address as a single string: use in case the address lines are entered  as single lines and later parsed into street, house number and house number addition..</param>
+        [JsonConstructor]
+        public MerchantAddressResponse()
+        {
+            
+        }
         public MerchantAddressResponse(string line1 = default(string), string line2 = default(string), string line3 = default(string), Gender? gender = default(Gender?), string companyName = default(string), string firstName = default(string), string lastName = default(string), string streetName = default(string), string houseNr = default(string), string houseNrAddition = default(string), string zipCode = default(string), string city = default(string), string region = default(string), string countryIso = default(string), string original = default(string))
         {
             this.Line1 = line1;

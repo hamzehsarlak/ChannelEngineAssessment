@@ -11,16 +11,16 @@ namespace ChannelEngine.Core.Abstraction.CQRS
         Task<IRestBusResult<TResponse>> Post<TRequest, TResponse>(string url, string path, TRequest command,
             Dictionary<string, string> headers,
             IEnumerable<Tuple<string, string>> queryParameters,
-            CancellationToken cancellationToken = default) where TRequest : ICommand;
+            CancellationToken cancellationToken = default);
 
         Task<IRestBusResult<TResponse>> Put<TRequest, TResponse>(string url, string path, TRequest command,
             Dictionary<string, string> headers,
             IEnumerable<Tuple<string, string>> queryParameters,
-            CancellationToken cancellationToken = default) where TRequest : ICommand;
+            CancellationToken cancellationToken = default);
 
         Task<IRestBusResult<TResponse>> Delete<TRequest, TResponse>(string url, string path, TRequest command,
             Dictionary<string, string> headers,
             IEnumerable<Tuple<string, string>> queryParameters,
-            CancellationToken cancellationToken = default) where TRequest : ICommand;
+            CancellationToken cancellationToken = default);
     }
 }

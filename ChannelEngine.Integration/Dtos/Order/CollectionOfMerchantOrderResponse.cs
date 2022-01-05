@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace ChannelEngine.Integration.Dtos.Order
 {
@@ -35,6 +36,11 @@ namespace ChannelEngine.Integration.Dtos.Order
         /// <param name="success">success.</param>
         /// <param name="message">message.</param>
         /// <param name="validationErrors">validationErrors.</param>
+        [JsonConstructor]
+        public CollectionOfMerchantOrderResponse()
+        {
+            
+        }
         public CollectionOfMerchantOrderResponse(List<MerchantOrderResponse> content = default(List<MerchantOrderResponse>), int count = default(int), int totalCount = default(int), int itemsPerPage = default(int), int statusCode = default(int), int? logId = default(int?), bool success = default(bool), string message = default(string), Dictionary<string, List<string>> validationErrors = default(Dictionary<string, List<string>>))
         {
             this.Content = content;

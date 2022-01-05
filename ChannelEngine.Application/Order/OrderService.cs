@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,11 +38,12 @@ namespace ChannelEngine.Application.Order
                 _options.OrderPathGet,
                 null,
                 qps, cancellationToken);
-            if (!request.IsSuccessful || !request.Result.Success) throw request.ErrorException;
+            if (request.ErrorException != null) throw request.ErrorException;
+            if (request.StatusCode != HttpStatusCode.OK) throw new Exception(request.Result.Message);
             return request.Result.Content;
         }
 
-        public async Task<IEnumerable<OrderLineGroupDto>> GetTopFiveMerchantProductNoAsync(
+        public async Task<IEnumerable<OrderLineGroupDto>> GetTopFiveMerchantProductsAsync(
             List<OrderStatusView> statuses = default,
             CancellationToken cancellationToken = default)
         {
@@ -54,7 +56,7 @@ namespace ChannelEngine.Application.Order
             return default;
         }
 
-        public IEnumerable<OrderLineGroupDto> GetTopFiveMerchantProductNoAsync(IEnumerable<MerchantOrderResponse> orders, 
+        public IEnumerable<OrderLineGroupDto> GetTopFiveMerchantProducts(IEnumerable<MerchantOrderResponse> orders, 
             CancellationToken cancellationToken = default)
         {
             return Top5MerchantProductNoAsync(orders);

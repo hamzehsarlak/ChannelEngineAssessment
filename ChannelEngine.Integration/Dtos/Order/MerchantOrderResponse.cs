@@ -40,7 +40,7 @@ namespace ChannelEngine.Integration.Dtos.Order
         /// Initializes a new instance of the <see cref="MerchantOrderResponse" /> class.
         /// </summary>
         [JsonConstructor]
-        protected MerchantOrderResponse() { }
+        public MerchantOrderResponse() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="MerchantOrderResponse" /> class.
         /// </summary>

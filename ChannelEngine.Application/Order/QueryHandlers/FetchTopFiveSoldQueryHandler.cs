@@ -22,7 +22,7 @@ namespace ChannelEngine.Application.Order.QueryHandlers
         public async Task<IEnumerable<OrderLineGroupDto>> Handle(FetchTopFiveSoldQuery request,
             CancellationToken cancellationToken)
         {
-            return await _orderService.GetTopFiveMerchantProductNoAsync(new List<OrderStatusView>()
+            return await _orderService.GetTopFiveMerchantProductsAsync(new List<OrderStatusView>()
             {
                 OrderStatusView.IN_PROGRESS
             }, cancellationToken);

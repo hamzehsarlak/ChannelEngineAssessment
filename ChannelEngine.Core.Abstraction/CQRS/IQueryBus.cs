@@ -8,7 +8,9 @@ namespace ChannelEngine.Core.Abstraction.CQRS
     /// </summary>
     public interface IQueryBus
     {
-        Task<TResponse> Send<TQuery, TResponse>(TQuery query, CancellationToken cancellationToken = default)
+        Task<TResponse> SendAsync<TQuery, TResponse>(TQuery query, CancellationToken cancellationToken = default)
+            where TQuery : IQuery<TResponse>;
+        TResponse Send<TQuery, TResponse>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : IQuery<TResponse>;
     }
 }
