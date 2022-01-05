@@ -25,7 +25,7 @@ namespace ChannelEngine.Core.RestSharp
             IEnumerable<Tuple<string, string>> queryParameters = null,
             CancellationToken cancellationToken = default) 
         {
-            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, Method.POST, headers, queryParameters));
+            return await HttpAsync<TResponse>(GetRestClient(url), GetRestRequest(path, Method.GET, headers, queryParameters));
         }
     }
 

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace ChannelEngine.Integration.Dtos.Order
 {
@@ -31,7 +32,11 @@ namespace ChannelEngine.Integration.Dtos.Order
             this.Key = key;
             this.Value = value;
         }
-
+        [JsonConstructor]
+        public MerchantOrderLineExtraDataResponse()
+        {
+            
+        }
         /// <summary>
         /// Gets or Sets Key
         /// </summary>

@@ -24,12 +24,17 @@ namespace ChannelEngine.Application.Offer
         public async Task<Dictionary<string, List<string>>> UpdateStockAsync(string merchantProductNo, int stock,
             CancellationToken cancellationToken = default)
         {
-            var request= await _restCommandBus.Put<UpdateStockRequest, SingleOfDictionaryOfStringAndListOfString>(_options.BaseUrl, _options.SetStockPath,
-                new UpdateStockRequest
-                {
-                    MerchantProductNo = merchantProductNo,
-                    Stock = stock
-                }, null, new List<Tuple<string, string>> {_options.GetApiKeyQueryString()}, cancellationToken);
+            var request =
+                await _restCommandBus.Put<List<UpdateStockRequest>, SingleOfDictionaryOfStringAndListOfString>(
+                    _options.BaseUrl, _options.SetStockPath,
+                    new List<UpdateStockRequest>
+                    {
+                        new UpdateStockRequest
+                        {
+                            MerchantProductNo = merchantProductNo,
+                            Stock = stock
+                        }
+                    }, null, new List<Tuple<string, string>> {_options.GetApiKeyQueryString()}, cancellationToken);
             if (!request.IsSuccessful || !request.Result.Success) throw request.ErrorException;
             return request.Result.Content;
         }

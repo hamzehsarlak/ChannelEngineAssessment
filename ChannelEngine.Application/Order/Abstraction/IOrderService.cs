@@ -13,7 +13,7 @@ namespace ChannelEngine.Application.Order.Abstraction
             List<OrderStatusView> statuses = default,
             CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<OrderLineGroupDto>> GetTopFiveMerchantProductNoAsync(List<OrderStatusView> statuses = default,
+        Task<IEnumerable<OrderLineGroupDto>> GetTopFiveMerchantProductsAsync(List<OrderStatusView> statuses = default,
             CancellationToken cancellationToken = default);
 
         IEnumerable<OrderLineGroupDto> GetTopFiveMerchantProductNoAsync(IEnumerable<MerchantOrderResponse> orders,

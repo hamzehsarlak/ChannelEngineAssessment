@@ -12,14 +12,14 @@ namespace ChannelEngine.Web.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/Inventory/v{version:apiVersion}/[controller]/[action]")]
-    public class OrderController : ControllerBase
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
+    public class OrdersController : ControllerBase
     {
-        private readonly ILogger<OrderController> _logger;
+        private readonly ILogger<OrdersController> _logger;
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
 
-        public OrderController(ILogger<OrderController> logger, ICommandBus commandBus, IQueryBus queryBus)
+        public OrdersController(ILogger<OrdersController> logger, ICommandBus commandBus, IQueryBus queryBus)
         {
             _logger = logger;
             _commandBus = commandBus;
@@ -31,5 +31,10 @@ namespace ChannelEngine.Web.Controllers
             return await _queryBus.SendAsync<FetchAllOrdersQuery, IEnumerable<MerchantOrderResponse>>(new FetchAllOrdersQuery());
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<OrderLineGroupDto>> GetTopFiveMerchantProducts()
+        {
+            return await _queryBus.SendAsync<FetchTopFiveSoldQuery, IEnumerable<OrderLineGroupDto>>(new FetchTopFiveSoldQuery());
+        }
     }
 }

@@ -1,158 +1,143 @@
-﻿const uri = 'api/todoitems';
-let todos = [];
+﻿const orderUri = "api/v1/orders";
+const offerUri = "api/v1/offers";
+const getAllOrdersUri = orderUri + "/getAllOrders";
+const getTopFiveMerchantProductsUri = orderUri + "/getTopFiveMerchantProducts";
+const updateStockUri = offerUri + "/UpdateStock";
+let orders = [];
+let currentOrder;
+
 
 function generateTableHead(table, data) {
     const thead = table.createTHead();
     const row = thead.insertRow();
-    for (let key of data) {
-        const th = document.createElement("th");
-        const text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
+    addHeader(row, "No");
+    for (let key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+            addHeader(row, data[key]);
+        }
     }
+    addHeader(row, "Action");
 }
 
-function generateTable(table, data) {
+function addHeader(row,html) {
+    const th = document.createElement("th");
+    const text = document.createTextNode(html);
+    th.appendChild(text);
+    row.appendChild(th);
+}
+
+function generateTable(table, data, idField) {
+    let index = 0;
     for (let element of data) {
+        index++;
         const row = table.insertRow();
+        addCell(row, index);
         let key;
         for (key in element) {
             if (Object.prototype.hasOwnProperty.call(element, key)) {
-                const cell = row.insertCell();
-                const text = document.createTextNode(element[key]);
-                cell.appendChild(text);
+                addCell(row, element[key]);
             }
         }
+        addCell(row,
+            '<button type="button" class="btn btn-primary btnUpdateStock" id="' +
+            element[idField] +
+            '"><i class="fas fa-layer-group"></i></button>');
     }
 }
+function addCell(row,html) {
+    const cell = row.insertCell();
+    cell.innerHTML += html;
+}
 
-function initTable(tableName, rows) {
-    let table = document.querySelector("table");
-    let data = Object.keys(rows[0]);
-    generateTableHead(table, data);
-    generateTable(table, rows);
+function initTable(tableName, dataObj) {
+    $("#" + tableName).html('');
+    const table = document.getElementById(tableName);
+    const rows = dataObj.result;
+    generateTableHead(table, dataObj.headers);
+    generateTable(table, rows, dataObj.idField);
 }
 
 
-function getItems() {
-    fetch(uri)
-        .then(response => response.json())
-        .then(data => _displayItems(data))
+function getAllOrders() {
+    fetch(getAllOrdersUri)
+        .then(response =>
+            response.json()
+    )
+        .then(data =>
+            _displayItems(data)
+    )
         .catch(error => console.error('Unable to get items.', error));
 }
 
-function addItem() {
-    const addNameTextbox = document.getElementById('add-name');
-
-    const item = {
-        isComplete: false,
-        name: addNameTextbox.value.trim()
-    };
-
-    fetch(uri, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(item)
-    })
-        .then(response => response.json())
-        .then(() => {
-            getItems();
-            addNameTextbox.value = '';
+function getTopFiveMerchantProducts() {
+    fetch(getTopFiveMerchantProductsUri)
+        .then(response =>
+            response.json()
+        )
+        .then(data => {
+            data.headers = {
+                merchantProductNo: "Product No",
+                gtin: "Gtin",
+                quantity: "Quantity",
+                description: "Description"
+            };
+            data.idField = "merchantProductNo";
+            orders = data;
+            _displayItems(data);
         })
-        .catch(error => console.error('Unable to add item.', error));
+        .catch(error => console.error('Unable to get items.', error));
 }
 
-function deleteItem(id) {
-    fetch(`${uri}/${id}`, {
-        method: 'DELETE'
-    })
-        .then(() => getItems())
-        .catch(error => console.error('Unable to delete item.', error));
-}
+function updateStock(stock) {
 
-function displayEditForm(id) {
-    const item = todos.find(item => item.id === id);
-
-    document.getElementById('edit-name').value = item.name;
-    document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-isComplete').checked = item.isComplete;
-    document.getElementById('editForm').style.display = 'block';
-}
-
-function updateItem() {
-    const itemId = document.getElementById('edit-id').value;
-    const item = {
-        id: parseInt(itemId, 10),
-        isComplete: document.getElementById('edit-isComplete').checked,
-        name: document.getElementById('edit-name').value.trim()
-    };
-
-    fetch(`${uri}/${itemId}`, {
-        method: 'PUT',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(item)
-    })
-        .then(() => getItems())
+    fetch(updateStockUri, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                merchantProductNo: currentOrder.merchantProductNo,
+                stock: stock
+            })
+        })
+        .then(() => {
+            $("#editStockModal").modal('toggle');
+            showToast('Stock of ' + currentOrder.description + ' has been updated successfully');
+            getTopFiveMerchantProducts();
+        })
         .catch(error => console.error('Unable to update item.', error));
-
-    closeInput();
-
-    return false;
 }
 
-function closeInput() {
-    document.getElementById('editForm').style.display = 'none';
+$(document).ready(function() {
+    $('#editStockModal').on('click', '.btnUpdateStockCall', function () {
+        updateStock();
+    });
+    $('#ordersTable').on('click', '.btnUpdateStock', function () {
+        $("#editStockModal").modal('toggle');
+        const id = this.id;
+        const modal = $("#editStockModal");
+        currentOrder = getOrderById(id);
+        modal.find('.modal-title').text('Update stock of ' + currentOrder.description);
+        modal.find("#stockInput").val(currentOrder.quantity);
+    });
+});
+
+function showToast(text) {
+    $("#toast").find('.modal-body').html(text);
+    $("#toast").modal('toggle');
 }
 
-function _displayCount(itemCount) {
-    const name = (itemCount === 1) ? 'to-do' : 'to-dos';
-
-    document.getElementById('counter').innerText = `${itemCount} ${name}`;
+function getOrderById(id) {
+    if (!orders || !orders.result) return null;
+    let item = orders.result.find(function (order, index) {
+        if (order.merchantProductNo === id)
+            return order;
+        return null;
+    });
+    return item;
 }
 
 function _displayItems(data) {
-    const tBody = document.getElementById('todos');
-    tBody.innerHTML = '';
-
-    _displayCount(data.length);
-
-    const button = document.createElement('button');
-
-    data.forEach(item => {
-        let isCompleteCheckbox = document.createElement('input');
-        isCompleteCheckbox.type = 'checkbox';
-        isCompleteCheckbox.disabled = true;
-        isCompleteCheckbox.checked = item.isComplete;
-
-        let editButton = button.cloneNode(false);
-        editButton.innerText = 'Edit';
-        editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
-
-        let deleteButton = button.cloneNode(false);
-        deleteButton.innerText = 'Delete';
-        deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
-
-        let tr = tBody.insertRow();
-
-        let td1 = tr.insertCell(0);
-        td1.appendChild(isCompleteCheckbox);
-
-        let td2 = tr.insertCell(1);
-        let textNode = document.createTextNode(item.name);
-        td2.appendChild(textNode);
-
-        let td3 = tr.insertCell(2);
-        td3.appendChild(editButton);
-
-        let td4 = tr.insertCell(3);
-        td4.appendChild(deleteButton);
-    });
-
-    todos = data;
+    initTable("ordersTable", data);
 }

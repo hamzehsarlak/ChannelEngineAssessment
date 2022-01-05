@@ -69,6 +69,8 @@ namespace ChannelEngine.Core.RestSharp
             try
             {
                 var restResponse = await Task.Factory.StartNew(() => RestResponseWithPolicy<TResponse>(restClient, request));
+                if (restResponse.ErrorException != null)
+                    throw restResponse.ErrorException;
                 return new ExternalCommandResult<TResponse>
                 {
                     Result = restResponse.Data,
