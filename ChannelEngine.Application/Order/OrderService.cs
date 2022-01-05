@@ -56,7 +56,7 @@ namespace ChannelEngine.Application.Order
             return default;
         }
 
-        public IEnumerable<OrderLineGroupDto> GetTopFiveMerchantProductNoAsync(IEnumerable<MerchantOrderResponse> orders, 
+        public IEnumerable<OrderLineGroupDto> GetTopFiveMerchantProducts(IEnumerable<MerchantOrderResponse> orders, 
             CancellationToken cancellationToken = default)
         {
             return Top5MerchantProductNoAsync(orders);

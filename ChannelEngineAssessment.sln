@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelEngine.Integration",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelEngine.Web", "ChannelEngine.Web\ChannelEngine.Web.csproj", "{A0BF7D27-4FDF-4044-9203-6ECB77A48386}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{09FDA87D-9A8E-4E91-BFD5-F8262FDC5701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelEngine.Tests", "ChannelEngine.Tests\ChannelEngine.Tests.csproj", "{BC2ECE09-7A79-48E6-8A25-84B876480270}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,10 @@ Global
 		{A0BF7D27-4FDF-4044-9203-6ECB77A48386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0BF7D27-4FDF-4044-9203-6ECB77A48386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0BF7D27-4FDF-4044-9203-6ECB77A48386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC2ECE09-7A79-48E6-8A25-84B876480270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC2ECE09-7A79-48E6-8A25-84B876480270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC2ECE09-7A79-48E6-8A25-84B876480270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC2ECE09-7A79-48E6-8A25-84B876480270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{39C0648E-C057-4666-AB8C-03CD847FFEA4} = {5CC33289-A4E0-4920-89C7-AEFBB94EFAD0}
 		{EC0BACD7-0D6A-4844-9976-575608E2C4EC} = {5CC33289-A4E0-4920-89C7-AEFBB94EFAD0}
 		{A0BF7D27-4FDF-4044-9203-6ECB77A48386} = {5CC33289-A4E0-4920-89C7-AEFBB94EFAD0}
+		{BC2ECE09-7A79-48E6-8A25-84B876480270} = {09FDA87D-9A8E-4E91-BFD5-F8262FDC5701}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6752DED1-34BB-47FE-B855-208909DAC391}
