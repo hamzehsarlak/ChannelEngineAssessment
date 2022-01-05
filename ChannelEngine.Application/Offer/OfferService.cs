@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ChannelEngine.Application.Offer.Abstraction;
@@ -35,7 +36,8 @@ namespace ChannelEngine.Application.Offer
                             Stock = stock
                         }
                     }, null, new List<Tuple<string, string>> {_options.GetApiKeyQueryString()}, cancellationToken);
-            if (!request.IsSuccessful || !request.Result.Success) throw request.ErrorException;
+            if (request.ErrorException != null) throw request.ErrorException;
+            if (request.StatusCode != HttpStatusCode.OK) throw new Exception(request.Result.Message);
             return request.Result.Content;
         }
     }

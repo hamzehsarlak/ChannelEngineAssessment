@@ -66,7 +66,7 @@ function getAllOrders() {
         .then(data =>
             _displayItems(data)
     )
-        .catch(error => console.error('Unable to get items.', error));
+        .catch(error => showToast('Unable to get items.<br>' + JSON.stringify(error)));
 }
 
 function getTopFiveMerchantProducts() {
@@ -85,7 +85,7 @@ function getTopFiveMerchantProducts() {
             orders = data;
             _displayItems(data);
         })
-        .catch(error => console.error('Unable to get items.', error));
+        .catch(error => showToast('Unable to get items.' + JSON.stringify(error)));
 }
 
 function updateStock(stock) {
@@ -103,10 +103,10 @@ function updateStock(stock) {
         })
         .then(() => {
             $("#editStockModal").modal('toggle');
-            showToast('Stock of ' + currentOrder.description + ' has been updated successfully');
+            showToast('Stock of ' + currentOrder.description + ' has been successfully updated.');
             getTopFiveMerchantProducts();
         })
-        .catch(error => console.error('Unable to update item.', error));
+        .catch(error => showToast('Unable to update item.<br>'+JSON.stringify(error)));
 }
 
 $(document).ready(function() {
